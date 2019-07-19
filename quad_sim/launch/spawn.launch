@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="name" default="m100"/>
+  <arg name="model" default="$(find quad_sim)/urdf/m100.gazebo.xacro"/>
+
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.3"/>
+
+  <arg name="world_frame" default="world"/> <!-- This should actually be "/world". See https://github.com/ros-simulation/gazebo_ros_pkgs/pull/324 -->
+  <arg name="base_link_frame" default="base_link"/>
+
+  <!-- send the robot XML to param server -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(arg model)' base_link_frame:=$(arg base_link_frame) world_frame:=$(arg world_frame)" /><!-- required for message_to_tf -->
+  <param name="base_link_frame" type="string" value="$(arg base_link_frame)" />
+
+  <!-- start robot state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" >
+    <param name="publish_frequency" type="double" value="50.0" />
+  </node>
+
+  <!-- publish state and tf -->
+  <node name="ground_truth_to_tf" pkg="message_to_tf" type="message_to_tf" output="screen">
+    <param name="odometry_topic" value="m100/odom" />
+    <param name="frame_id" value="odom" />
+  </node>
+
+  <remap from="pose" to="ground_truth_to_tf/pose"/>
+
+  <!-- Use twist mux to override the altitude (attitude!) controller -->
+  <node pkg="twist_mux" type="twist_mux" name="twist_mux">
+    <rosparam command="load" file="$(find quad_sim)/params/twist_mux.yaml" />
+    <remap from="cmd_vel_out" to="cmd_vel"/>
+  </node>
+
+  <!-- Flooooooat -->
+  <node name="m100_hover" pkg="quad_sim" type="floatie.py" output="screen"/> 
+
+  <!-- start joint state publisher -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen"/>
+ 
+  <!-- Translate hector specific actions to m100 equivalent -->
+  <node name="hector_to_m100" pkg="quad_sim" type="hector_to_m100.py" output="screen"/> 
+
+  <!-- load controllers -->
+  <include file="$(find quad_sim)/launch/controller.launch"/>
+
+  <!-- load actions -->
+  <include file="$(find quad_sim)/launch/actions.launch" />
+
+  <!-- load aerodynamic and motor parameters -->
+  <rosparam command="load" file="$(find quad_sim)/params/m100_aerodynamics.yaml" />
+  <rosparam command="load" file="$(find quad_sim)/params/m100_motors.yaml" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description
+           -urdf
+           -x $(arg x)
+           -y $(arg y)
+           -z $(arg z)
+           -model $(arg name)"
+        respawn="false" output="screen"/>
+
+</launch>

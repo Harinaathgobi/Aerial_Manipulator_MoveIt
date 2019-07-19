@@ -1,0 +1,12 @@
+arm:
+  arm_controller:
+    type: "effort_controllers/JointTrajectoryController"
+    joints:
+      - joint0
+      - joint1
+      - joint2
+
+    gains:
+      joint0: {p: 1.0, i: 0.00, d: 0.0}
+      joint1: {p: 1.0, i: 0.00, d: 0.0}
+      joint2: {p: 1.0, i: 0.00, d: 0.0}

@@ -1,0 +1,15 @@
+controller_manager_ns: controller_manager
+controller_list:
+  - name: quad_controller
+    default: true
+    joints:
+      - virtual_joint
+
+  - name: controllers/arm/arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - joint0
+      - joint1
+      - joint2

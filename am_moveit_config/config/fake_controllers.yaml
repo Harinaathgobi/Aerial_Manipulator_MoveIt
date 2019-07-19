@@ -1,0 +1,12 @@
+controller_list:
+  - name: fake_quad_base_controller
+    joints:
+      - virtual_joint
+  - name: fake_arm_controller
+    joints:
+      - joint0
+      - joint1
+      - joint2
+  - name: fake_hand_controller
+    joints:
+      []

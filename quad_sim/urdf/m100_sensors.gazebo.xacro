@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Quadrotor Sensor Plugins -->
+  <xacro:macro name="m100_sensors">
+
+
+        <gazebo>
+          <plugin name="bebop_gps_sim" filename="libhector_gazebo_ros_gps.so">
+            <updateRate>4.0</updateRate>
+            <bodyName>base_link</bodyName>
+            <frameId>$(arg base_link_frame)</frameId>
+            <topicName>/m100/fix</topicName>
+            <velocityTopicName>/m100/fix_velocity</velocityTopicName>
+            <referenceLatitude>37.9707</referenceLatitude>
+            <referenceLongitude>23.7294</referenceLongitude>
+            <drift>5.0 5.0 5.0</drift>
+            <gaussianNoise>0.01 0.01 0.01</gaussianNoise>
+            <velocityDrift>0 0 0</velocityDrift>
+            <velocityGaussianNoise>0.05 0.05 0.05</velocityGaussianNoise>
+          </plugin>
+
+          <plugin name="bebop_groundtruth_sim" filename="libgazebo_ros_p3d.so">
+            <updateRate>100.0</updateRate>
+            <bodyName>base_link</bodyName>
+            <topicName>/m100/odom</topicName>
+            <gaussianNoise>0.0</gaussianNoise>
+            <frameName>$(arg world_frame)</frameName>
+          </plugin>
+
+        </gazebo>
+  </xacro:macro>
+
+</robot>

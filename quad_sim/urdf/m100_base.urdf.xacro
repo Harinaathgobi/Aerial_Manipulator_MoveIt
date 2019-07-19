@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="pi" value="3.1415926535897931" />
+
+  <!-- Main quadrotor link -->
+  <xacro:macro name="m100_base_macro">
+    <link name="base_link">
+      <inertial>
+        <mass value="0.399" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.01152" ixy="0.0" ixz="0.0" iyy="0.01152" iyz="0.0" izz="0.0218" />
+        <!-- Inertia from hector quadrotor, sorry! -->
+      </inertial>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://quad_sim/meshes/hku_m100.dae"/>
+        </geometry>
+        <material name="blue">
+          <color rgba="0 0.4 0.6 1"/>
+        </material>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://quad_sim/meshes/hku_m100.stl"/>
+        </geometry>
+      </collision>
+    </link>
+     <link name="base">
+       <visual>
+     <origin xyz="0 0 0" rpy="0 0 0" />
+         <geometry>
+            <box size=".2 .2 0.04"/>
+         </geometry>
+       </visual>
+       <collision>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+            <box size="0.2 0.2 .04"/>
+          </geometry>
+        </collision>
+        <inertial>
+           <mass value="0.2"/>
+           <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+         </inertial>
+     </link>
+
+     <link name="link_01">
+       <visual>
+     <origin xyz="0 0 0" rpy="0 3.14 0" />
+         <geometry>
+            <cylinder length="0.07" radius="0.03"/>
+         </geometry>
+       </visual>
+       <collision>
+          <origin xyz="0 0 0" rpy="0 3.14 0" />
+          <geometry>
+            <cylinder length="0.07" radius="0.03"/>
+          </geometry>
+        </collision>
+        <inertial>
+           <mass value="0.0842"/>
+           <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.011"/>
+         </inertial>
+     </link>
+
+    <link name="link_02">
+       <visual>
+     <origin xyz="0 0 -.1" rpy="0 0 0" />
+         <geometry>
+            <cylinder length="0.2" radius="0.02"/>
+         </geometry>
+       </visual>
+       <collision>
+          <origin xyz="0 0 -.1" rpy="0 0 0" />
+          <geometry>
+            <cylinder length="0.2" radius="0.02"/>
+          </geometry>
+        </collision>
+        <inertial>
+           <mass value="0.0464"/>
+           <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.00" izz="0.011"/>
+         </inertial>
+    </link>
+
+    <link name="link_03">
+       <visual>
+     <origin xyz="0 0 -.0875" rpy="0 0 0" />
+         <geometry>
+            <cylinder length="0.175" radius="0.02"/>
+         </geometry>
+       </visual>
+       <collision>
+          <origin xyz="0 0 -.0875" rpy="0 0 0" />
+          <geometry>
+            <cylinder length="0.175" radius="0.02"/>
+          </geometry>
+        </collision>
+        <inertial>
+           <mass value="0.0464"/>
+           <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.011"/>
+         </inertial>
+     </link>
+
+    <link name="link_04">
+       <visual>
+     <origin xyz="0 0 -.01" rpy="0 0 0" />
+         <geometry>
+            <cylinder length="0.02" radius="0.02"/>
+         </geometry>
+       </visual>
+       <collision>
+          <origin xyz="0 0 .01" rpy="0 0 0" />
+          <geometry>
+            <cylinder length="0.02" radius="0.02"/>
+          </geometry>
+        </collision>
+        <inertial>
+           <mass value="0.02"/>
+           <inertia ixx=".0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+         </inertial>
+     </link>
+
+
+     <joint name="Main" type="fixed">
+       <parent link="base_link"/>
+       <child link="base"/>
+     </joint>
+
+     <joint name="joint0" type="revolute">
+       <axis xyz="0 0 1" />
+       <limit effort="1000" lower="-3.14" upper="3.14" velocity=".5" />
+       <origin rpy="0 0 0" xyz="0 0 -.035" />
+       <parent link="base"/>
+       <child link="link_01"/>
+     </joint>
+
+     <joint name="joint1" type="revolute">
+       <axis xyz="0 1 0" />
+       <limit effort="1000" lower="0" upper="1.57" velocity=".5" />
+       <origin rpy="0 0 0" xyz="0 0 0" />
+       <parent link="link_01"/>
+       <child link="link_02"/>
+     </joint>
+     <joint name="joint2" type="revolute">
+       <axis xyz="0 1 0" />
+       <limit effort="1000" lower="0" upper="1.57" velocity=".5" />
+       <origin rpy="0 -1.57 0" xyz="0 0 -0.2" />
+       <parent link="link_02"/>
+       <child link="link_03"/>
+     </joint>
+
+
+    <joint name="joint3" type="fixed">
+       <origin rpy="0 0 0" xyz="0 0 -0.175" />
+       <parent link="link_03"/>
+       <child link="link_04"/>
+     </joint>
+
+   <transmission name="tran0">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint0">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor0">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+    <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+    <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+     <gazebo reference="base_link">
+       <material>Gazebo/Blue</material>
+       <turnGravityOff>false</turnGravityOff>
+     </gazebo>
+    
+  </xacro:macro>
+</robot>

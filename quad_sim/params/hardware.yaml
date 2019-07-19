@@ -1,0 +1,7 @@
+arm:
+  hardware_interface:
+     loop_hz: 10 # hz
+     joints:
+       - joint0
+       - joint1
+       - joint2

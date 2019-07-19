@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<robot
+  name="quad"
+  xmlns:xacro="http://www.ros.org/wiki/xacro"
+>
+
+    <!-- Included URDF Files -->
+    <xacro:include filename="$(find quad_sim)/urdf/m100_base.urdf.xacro" />
+
+    <xacro:m100_base_macro />
+
+</robot>

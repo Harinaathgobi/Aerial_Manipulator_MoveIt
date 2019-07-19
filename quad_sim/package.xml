@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>quad_sim</name>
+  <version>0.0.0</version>
+  <description>The quad_sim package</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="harinaathgobi@todo.todo">harinaathgobi</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>tf2</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>hector_uav_msgs</build_depend>
+  <build_depend>tf2_geometry_msgs</build_depend>
+  <build_depend>hector_quadrotor_actions</build_depend>
+  <build_depend>hector_quadrotor_interface</build_depend>
+  
+  <exec_depend>tf2</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>twist_mux</exec_depend>
+  <exec_depend>actionlib</exec_depend>
+  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>message_to_tf</exec_depend>
+  <exec_depend>gazebo_plugins</exec_depend>
+  <exec_depend>hector_uav_msgs</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <exec_depend>hector_gazebo_plugins</exec_depend>
+  <exec_depend>hector_sensors_gazebo</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>hector_quadrotor_actions</exec_depend>
+  <exec_depend>hector_quadrotor_interface</exec_depend>
+  <exec_depend>hector_quadrotor_gazebo_plugins</exec_depend>
+  <exec_depend>hector_quadrotor_controller_gazebo</exec_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

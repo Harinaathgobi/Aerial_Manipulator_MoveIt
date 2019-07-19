@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<robot name="m100" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find quad_sim)/urdf/m100.urdf.xacro" />
+    <xacro:include filename="$(find quad_sim)/urdf/m100_plugins.gazebo.xacro" />
+</robot>

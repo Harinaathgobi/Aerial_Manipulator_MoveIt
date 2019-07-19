@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <include file="$(find quad_sim)/launch/m100_takeoff.launch" />
+ 
+  
+  <node pkg="tf_velocity_estimator" type="velocity_estimator.py" name="tf_velocity_estimator" output="screen" />
+  <node pkg="rviz" type="rviz" name="rviz" output="screen" args="-d $(find quad_sim)/rviz/rviz.rviz"/>
+
+</launch>

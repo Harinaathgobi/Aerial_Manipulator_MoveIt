@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="m100_controller">
+    <gazebo>
+      <plugin name="m100_controller" filename="libgazebo_ros_control.so">
+         <robotSimType>hector_quadrotor_controller_gazebo/QuadrotorHardwareSim</robotSimType>
+        <legacyModeNS>true</legacyModeNS>
+      </plugin>
+    </gazebo>
+
+   <gazebo>
+    <plugin name="gazebo_ros_control" filename="libhwi_switch_gazebo_ros_control.so">
+      <robotNamespace>controllers/arm</robotNamespace>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+  </xacro:macro>
+</robot>
