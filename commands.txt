@@ -1,0 +1,18 @@
+Open terminal ctrl+alt+t
+
+cd ~/am_ws/
+catkin_make
+source devel/setup.bash 
+roslaunch quad_sim m100_takeoff.launch
+
+Open new window in terminal ctrl+shift+t
+
+cd ~/am_ws/ (not needed)
+source devel/setup.bash 
+rostopic pub -1 command/pose geometry_msgs/PoseStamped '{ header: { frame_id:  "world"}, pose: { position: { x: 2, y: 2, z: 1}, orientation: { x: 0, y: 0, z: 0, w: 1 } } }'
+
+Open new window in terminal ctrl+shift+t
+
+source devel/setup.bash 
+roslaunch am_moveit_config moveit_planning_execution.launch.xml
+
